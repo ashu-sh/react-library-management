@@ -4,10 +4,10 @@
 - Values on Dashboard update in Realtime by  - Firebase Realtime Database.
 
 # Demo Snapshots - 
- 
- ![image](https://github.com/ashu-sh/react-library-management/assets/102554445/b6af6256-ee60-4c75-95a4-a6ef378d25aa)
 
-![image](https://github.com/ashu-sh/react-library-management/assets/102554445/7afd65f0-7e71-433e-bf97-2e5400653207)
+![image](https://github.com/ashu-sh/react-library-management/assets/102554445/3a9d0cf7-6838-4d14-94c6-05f00449e2eb)
+![image](https://github.com/ashu-sh/react-library-management/assets/102554445/4980b612-a46f-4179-baf8-0bfbaa9d1274)
+
 
 
 
