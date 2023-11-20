@@ -1,0 +1,215 @@
+.nav-bar {
+  display: flex;
+  /* justify-content: space-around; */
+  align-items: center;
+  background-color: #262626;
+  padding: 2px 28px;
+  color: #fff;
+  gap: 130px;
+  /* box-shadow: 0px 3px 4px 0px rgba(255, 255, 255, 0.9); */
+}
+
+.logo {
+  font-size: 16px;
+  font-family: Montserrat, sans-serif;
+  /* float: left; */
+  display: flex;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 14px;
+  left: 0;
+  right: 0;
+  background-color: #262626;
+  text-align: center;
+  padding: 10px;
+}
+.show {
+  list-style: none;
+  display: flex;
+  gap: 17px;
+  top: 60px;
+  left: 0;
+  right: 0;
+  background-color: #2626263;
+  text-align: center;
+  padding: 10px;
+}
+.show a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 15px;
+}
+.nav-links a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 15px;
+  list-style: none;
+  gap: 0px;
+  font-family: calibri;
+  display: flex;
+  cursor: pointer;
+  padding: 0px 5px 0px 0px;
+}
+.nav-links a:hover {
+  background-color: #595959;
+  /* width: 100%; */
+  /* height: auto; */
+  /* min-height: 20px; */
+  /* line-height: 10px; */
+  border-radius: 4px;
+  padding: auto;
+  padding: 0px 5px 0px 0px;
+  transition: 0.2s;
+}
+
+.mobile-menu-icon {
+  display: none;
+}
+.Dashboard-Menu {
+  background-color: #000;
+  color: white;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  width: 15%;
+  /* margin: 10px; */
+  height: auto;
+  min-height: 93.6vh;
+  /* border-top: 0.5px solid white; */
+}
+.Dashboard-Menu > a {
+  padding-bottom: 20px;
+  font-size: 14px;
+  /* display: flex; */
+}
+.Dashboard-Menu a {
+  display: flex;
+  cursor: pointer;
+  padding: 4px 3px 3px 3px;
+}
+.Dashboard-Menu a:hover {
+  background-color: #595959;
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+  padding: auto;
+  /* padding: 5px 5px 3px 5px; */
+  padding: 4px 3px 3px 3px;
+  transition: 0.2s;
+}
+
+.bottom-tab {
+  position: absolute;
+  bottom: 20px;
+  left: 16px;
+  /* color: black; */
+  cursor: pointer;
+}
+
+.DashboardOne {
+  display: flex;
+}
+.EnrollmentGrid {
+  display: flex;
+  flex-direction: row;
+  /* font-size: 25px; */
+  text-align: start;
+  color: #fff;
+  gap: 20px;
+  grid-template-columns: 200px;
+  margin: 10px;
+  grid-template-columns: 384px 384px 384px;
+  display: flex;
+  width: 85%;
+  padding: 13px;
+  /* flex-wrap: wrap; */
+  justify-content: space-around;
+  margin-top: 55px;
+}
+.dashboard-header {
+  margin: 20px;
+  margin-right: -110px;
+  text-underline-offset: 5px;
+  font-size: 18px;
+}
+.EnrollmentGrid h2 {
+  font-size: 26px;
+}
+.view-btn {
+  width: 100%;
+  background-color: #005c99;
+  border-radius: 0px 0px 4px 4px;
+  padding: 2px 0px 3px;
+  display: flex;
+  font-size: 12px;
+  justify-content: center;
+}
+.flex-item-left {
+  background-color: #007acc;
+  flex: 50%;
+  height: 105px;
+  border-radius: 4px;
+}
+.Numbers {
+  padding: 10px;
+}
+
+.flex-item-centre {
+  background-color: #ff6666;
+  flex: 50%;
+  height: 105px;
+  border-radius: 4px;
+}
+.flex-item-right {
+  background-color: #d24dff;
+  flex: 50%;
+  height: 105px;
+  border-radius: 4px;
+}
+
+@media screen and (max-width: 600px) {
+  .mobile-menu-icon {
+    font-size: 24px;
+    cursor: pointer;
+    display: block;
+    transition: 0.8s;
+  }
+  .nav-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #1a1a1a;
+    padding: 13px 20px;
+    color: #fff;
+  }
+  .show {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+  }
+  .nav-links {
+    display: none;
+  }
+  .show {
+    flex-direction: column;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    right: 0;
+    background-color: #000;
+    text-align: center;
+    padding: 40px;
+  }
+  .show a {
+    color: #fff;
+    text-decoration: none;
+  }
+}
+@media screen and (max-width: 850px) {
+  .nav-bar {
+    gap: 15px;
+  }
+}
