@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { toast } from "react-toastify";
 import fireDB from "../Database/Firebase";
 import "../Compstyling/AddTecher.css";
 import { ScaleLoader } from "react-spinners";
 // import { useNavigate } from "react-router-dom";
+import emailjs from "@emailjs/browser";
+import axios from "axios";
 
 const initalState = {
   name: "",
@@ -25,7 +27,7 @@ function AddTeacher() {
     Addteacher({ ...Teacher, [name]: value });
   };
 
-  const handleTeacherSubmission = (e) => {
+  const handleTeacherSubmission = async (e) => {
     e.preventDefault();
     setLoading(true);
 
@@ -67,7 +69,7 @@ function AddTeacher() {
         <form
           style={{
             margin: "auto",
-            padding: "15px",
+            padding: "23px",
             maxWidth: "400px",
             alignContent: "center",
           }}
@@ -110,7 +112,7 @@ function AddTeacher() {
             onChange={handleInputFields}
           />
 
-          <input type="submit" value="Save" />
+          <input type="submit" value="Submit" />
         </form>
       </div>
     </div>

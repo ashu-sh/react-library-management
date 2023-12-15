@@ -1,0 +1,10 @@
+.footer-bar {
+  display: flex;
+  /* justify-content: space-around; */
+  align-items: center;
+  background-color: grey;
+  padding: 5px 27px;
+  color: #fff;
+  gap: 130px;
+  /* box-shadow: 0px 3px 4px 0px rgba(255, 255, 255, 0.9); */
+}

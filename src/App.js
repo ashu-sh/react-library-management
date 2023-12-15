@@ -10,55 +10,131 @@ import AddTeacher from "./DataFeeder/AddTeacher";
 import AddBook from "./DataFeeder/AddBook";
 import Allusers from "./AllData/Allusers";
 import Users from "./DashMenu/Users";
-import Books from "./DashMenu/Books";
 import Otherinfo from "./DashMenu/Otherinfo";
-import BookIssue from "./DashMenu/BookIssue";
-import BookReturn from "./DashMenu/BookReturn";
+import BookCirculation from "./DashMenu/BookCirculation";
 import Support from "./DashMenu/Support";
-// import DashboardMenu from "./Componants/DashboardMenu";
+import Students from "./AllData/Students";
+import BooksData from "./AllData/BooksData";
+import AdminLogin from "./Admin/AdminLogin";
+import { toast } from "react-toastify";
+import { useEffect, useState } from "react";
+import Footer from "./Componants/Footer";
 
 function App() {
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      setLoggedIn(true);
+    }
+  }, []);
+
+  const handleLoggedIn = (token) => {
+    localStorage.setItem("token", token);
+    toast.success("Welcome to LMS !");
+    setLoggedIn(true);
+  };
+
+  const handleLoggout = (token) => {
+    localStorage.removeItem("token", token);
+    toast.success("Thank you for using LMS ! See You Again");
+    setLoggedIn(false);
+  };
+
   return (
     <div className="App">
       <BrowserRouter>
         <ToastContainer position="top-right" theme="colored" />
-        <Routes>
-          <Route path="/">
-            <Route path="/" element={[<Navbar />, <DashboardComponantOne />]} />
-            <Route path="/addstudent" element={[<Navbar />, <AddStudents />]} />
-            <Route path="/addteacher" element={[<Navbar />, <AddTeacher />]} />
-            <Route path="/addbook" element={[<Navbar />, <AddBook />]} />
-            <Route
-              path="/All-users"
-              element={[<Navbar />, <DashboardMenu />, <Allusers />]}
-            />
-            <Route
-              path="/user"
-              element={[<Navbar />, <DashboardMenu />, <Users />]}
-            />
-            <Route
-              path="/books"
-              element={[<Navbar />, <DashboardMenu />, <Books />]}
-            />
-            <Route
-              path="/otherinfo"
-              element={[<Navbar />, <DashboardMenu />, <Otherinfo />]}
-            />
-            <Route
-              path="/issue&return"
-              element={[
-                <Navbar />,
-                <DashboardMenu />,
-                <BookIssue />,
-                <BookReturn />,
-              ]}
-            />
-            <Route
-              path="/support"
-              element={[<Navbar />, <DashboardMenu />, <Support />]}
-            />
-          </Route>
-        </Routes>
+        {loggedIn ? (
+          <Routes>
+            <Route path="/">
+              <Route
+                path="/"
+                element={[
+                  <Navbar onLogout={handleLoggout} />,
+                  <DashboardComponantOne />,
+                  <Footer />,
+                ]}
+              />
+              <Route
+                path="/addstudent"
+                element={[<Navbar onLogout={handleLoggout} />, <AddStudents />]}
+              />
+              <Route
+                path="/addteacher"
+                element={[<Navbar onLogout={handleLoggout} />, <AddTeacher />]}
+              />
+              <Route path="/addbook" element={[<Navbar />, <AddBook />]} />
+              <Route
+                path="/All-users"
+                element={[
+                  <Navbar onLogout={handleLoggout} />,
+                  <DashboardMenu />,
+                  <Allusers />,
+                ]}
+              />
+              <Route
+                path="/students"
+                element={[
+                  <Navbar onLogout={handleLoggout} />,
+                  <Students />,
+                  <DashboardMenu />,
+                ]}
+              />
+              <Route
+                path="/bookstore"
+                element={[
+                  <Navbar onLogout={handleLoggout} />,
+                  <BooksData />,
+                  <DashboardMenu />,
+                ]}
+              />
+              <Route
+                path="/user"
+                element={[
+                  <Navbar onLogout={handleLoggout} />,
+                  <Users />,
+                  <DashboardMenu />,
+                ]}
+              />
+              <Route
+                path="/bookstore"
+                element={[
+                  <Navbar onLogout={handleLoggout} />,
+                  <BooksData />,
+                  <DashboardMenu />,
+                ]}
+              />
+              <Route
+                path="/otherinfo"
+                element={[
+                  <Navbar onLogout={handleLoggout} />,
+                  <Otherinfo />,
+                  <DashboardMenu />,
+                ]}
+              />
+              <Route
+                path="/issue&return"
+                element={[
+                  <Navbar onLogout={handleLoggout} />,
+                  <BookCirculation />,
+                  <DashboardMenu />,
+                ]}
+              />
+              <Route
+                path="/support"
+                element={[
+                  <Navbar onLogout={handleLoggout} />,
+                  <Support />,
+                  <DashboardMenu />,
+                ]}
+              />
+            </Route>
+          </Routes>
+        ) : (
+          <AdminLogin onLogin={handleLoggedIn} />
+        )}
       </BrowserRouter>
     </div>
   );

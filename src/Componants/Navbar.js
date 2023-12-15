@@ -3,12 +3,15 @@ import React, { useState } from "react";
 import { FaArrowCircleRight } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import Logo from "../assets/Logo Copy.png";
-function Navbar() {
+import { Button } from "@mui/material";
+
+function Navbar({ onLogout }) {
   const [Menu, showMenu] = useState(false);
 
   const toggleMenu = () => {
     showMenu(!Menu);
   };
+
   return (
     <nav className="nav-bar">
       <Link to="/">
@@ -45,6 +48,9 @@ function Navbar() {
       </div>
       <div className="mobile-menu-icon" onClick={toggleMenu}>
         <i className={Menu ? "fa fa-times" : "fa fa-bars"}></i>
+      </div>
+      <div className="log-out-button">
+        <Button onClick={onLogout}>Logout</Button>
       </div>
     </nav>
   );

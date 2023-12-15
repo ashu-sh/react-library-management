@@ -58,7 +58,6 @@ function AddBook() {
     <div>
       {loading && (
         <div className="backdrop">
-          {/* Your preloader/spinner component */}
           <div className="preloader">
             <ScaleLoader color="#fff" />
             <p>Loading....</p>
@@ -69,7 +68,7 @@ function AddBook() {
         <form
           style={{
             margin: "auto",
-            padding: "15px",
+            padding: "23px",
             maxWidth: "400px",
             alignContent: "center",
           }}
@@ -120,7 +119,7 @@ function AddBook() {
             value={date}
             onChange={handleInputFields}
           />
-          <input type="submit" value="Save" />
+          <input type="submit" value="Submit" />
         </form>
       </div>
     </div>

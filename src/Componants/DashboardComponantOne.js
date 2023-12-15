@@ -7,6 +7,8 @@ import { toast } from "react-toastify";
 import { GrUserAdmin } from "react-icons/gr";
 import { PiStudentFill } from "react-icons/pi";
 import { MdLibraryBooks } from "react-icons/md";
+import StudentSearch from "../SearchComponant/StudentSearch";
+import BookSearch from "../SearchComponant/BookSearch";
 
 function DashboardComponantOne() {
   const [studentList, getStudentList] = useState([]);
@@ -35,8 +37,19 @@ function DashboardComponantOne() {
     <div>
       <div className="DashboardOne">
         <DashboardMenu />
+        <div className="dashboard-header2">
+          <h3>
+            Search <br />
+            _____________________
+          </h3>
+        </div>
+        <StudentSearch />
+        <BookSearch />
         <div className="dashboard-header">
-          <h3>Dashboard</h3>
+          <h3>
+            Dashboard <br />
+            _____________________
+          </h3>
         </div>
         <div className="EnrollmentGrid">
           <div className="flex-item-left">
@@ -80,12 +93,17 @@ function DashboardComponantOne() {
                 opacity: "0.4",
               }}
             />
-            <button className="view-btn" style={{ backgroundColor: "#e60000" }}>
-              View
-              <FaArrowCircleRight
-                style={{ margin: "3px", color: "#fff", fontSize: "13px" }}
-              />
-            </button>
+            <Link to="/students">
+              <button
+                className="view-btn"
+                style={{ backgroundColor: "#e60000" }}
+              >
+                View
+                <FaArrowCircleRight
+                  style={{ margin: "3px", color: "#fff", fontSize: "13px" }}
+                />
+              </button>
+            </Link>
           </div>
           <div className="flex-item-right">
             <div className="Numbers">
@@ -103,12 +121,17 @@ function DashboardComponantOne() {
                 opacity: "0.4",
               }}
             />
-            <button className="view-btn" style={{ backgroundColor: "#8600b3" }}>
-              View
-              <FaArrowCircleRight
-                style={{ margin: "3px", color: "#fff", fontSize: "13px" }}
-              />
-            </button>
+            <Link to="/bookstore">
+              <button
+                className="view-btn"
+                style={{ backgroundColor: "#8600b3" }}
+              >
+                View
+                <FaArrowCircleRight
+                  style={{ margin: "3px", color: "#fff", fontSize: "13px" }}
+                />
+              </button>
+            </Link>
           </div>
         </div>
       </div>

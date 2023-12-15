@@ -21,7 +21,7 @@ function DashboardMenu() {
           &nbsp; Users
         </a>
       </Link>
-      <Link to="/books">
+      <Link to="/bookstore">
         <a>
           <IoBookSharp style={{ fontSize: "19px" }} />
           &nbsp; Books

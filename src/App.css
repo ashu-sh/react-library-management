@@ -3,7 +3,7 @@
   /* justify-content: space-around; */
   align-items: center;
   background-color: #262626;
-  padding: 2px 28px;
+  padding: 5px 27px;
   color: #fff;
   gap: 130px;
   /* box-shadow: 0px 3px 4px 0px rgba(255, 255, 255, 0.9); */
@@ -23,8 +23,8 @@
   left: 0;
   right: 0;
   background-color: #262626;
-  text-align: center;
-  padding: 10px;
+  /* text-align: center; */
+  padding: 0px;
 }
 .show {
   list-style: none;
@@ -68,6 +68,11 @@
 .mobile-menu-icon {
   display: none;
 }
+.log-out-button {
+  display: flex;
+  margin-left: 45rem;
+  margin-right: 0px;
+}
 .Dashboard-Menu {
   background-color: #000;
   color: white;
@@ -77,7 +82,7 @@
   width: 15%;
   /* margin: 10px; */
   height: auto;
-  min-height: 93.6vh;
+  min-height: 100vh;
   /* border-top: 0.5px solid white; */
 }
 .Dashboard-Menu > a {
@@ -124,16 +129,25 @@
   grid-template-columns: 384px 384px 384px;
   display: flex;
   width: 85%;
-  padding: 13px;
+  padding: 7px;
   /* flex-wrap: wrap; */
   justify-content: space-around;
-  margin-top: 55px;
+  margin-top: 65px;
 }
 .dashboard-header {
   margin: 20px;
-  margin-right: -110px;
-  text-underline-offset: 5px;
+  margin-right: -175px;
+  /* text-underline-offset: 5px; */
   font-size: 18px;
+  line-height: 13px;
+}
+.dashboard-header2 {
+  margin: 20px;
+  margin-right: -175px;
+  /* text-underline-offset: 5px; */
+  font-size: 18px;
+  line-height: 13px;
+  margin-top: 220px;
 }
 .EnrollmentGrid h2 {
   font-size: 26px;
@@ -169,7 +183,21 @@
   height: 105px;
   border-radius: 4px;
 }
-
+.flex-item-left:hover {
+  box-shadow: 0px 50px 25px -40px rgba(0, 0, 0, 0.4);
+  transition: 0.4s;
+  margin-top: -2px;
+}
+.flex-item-centre:hover {
+  box-shadow: 0px 50px 25px -40px rgba(0, 0, 0, 0.4);
+  transition: 0.4s;
+  margin-top: -2px;
+}
+.flex-item-right:hover {
+  box-shadow: 0px 50px 25px -40px rgba(0, 0, 0, 0.4);
+  transition: 0.4s;
+  margin-top: -2px;
+}
 @media screen and (max-width: 600px) {
   .mobile-menu-icon {
     font-size: 24px;

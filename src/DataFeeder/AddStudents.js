@@ -72,7 +72,7 @@ function AddStudents() {
         <form
           style={{
             margin: "auto",
-            padding: "15px",
+            padding: "23px",
             maxWidth: "400px",
             alignContent: "center",
           }}
@@ -123,7 +123,7 @@ function AddStudents() {
             value={rollNo}
             onChange={handleInputFields}
           />
-          <input type="submit" value="Save" />
+          <input type="submit" value="Submit" />
         </form>
       </div>
     </div>

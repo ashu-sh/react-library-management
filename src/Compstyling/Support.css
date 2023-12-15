@@ -1,0 +1,14 @@
+.support-info {
+  margin: 35px 0px 0px 0px;
+  float: right;
+  width: 85%;
+  padding: 20px;
+}
+.support-info p {
+  font-size: 29px;
+  line-height: 14px;
+}
+.support-instr {
+  margin: 30px 0px 0px 0px;
+  text-align: end-start;
+}
