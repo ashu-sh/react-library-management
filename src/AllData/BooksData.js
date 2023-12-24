@@ -1,58 +1,148 @@
 import React, { useEffect, useState } from "react";
 import "../Compstyling/Books.css";
-import { toast } from "react-toastify";
+// import { toast } from "react-toastify";
 import fireDB from "../Database/Firebase";
 import Button from "@mui/material/Button";
+import { Link } from "react-router-dom";
+import Updatebook from "./Updatebook";
 
 function Books() {
-  const [bookList, getBookList] = useState([]);
+  const [bookList, setBookList] = useState({});
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   useEffect(() => {
-    try {
-      fireDB.child("libraryBookList").on("value", (data) => {
-        const fetchedBookList = data.val();
-        const BookArray = Object.values(fetchedBookList); //convert object to the array to get the length
-        getBookList(BookArray);
-      });
-    } catch (error) {
-      toast.error("Check your internet connection", error);
-    }
+    fireDB.child("libraryBookList").on("value", (snapshot) => {
+      const data = snapshot.val();
+
+      if (data !== null) {
+        setBookList({ ...data });
+      } else {
+        setBookList({});
+      }
+    });
+
+    return () => {
+      setBookList({});
+    };
   }, []);
+
+  const handleBookDelete = (id) => {
+    fireDB.child(`libraryBookList/${id}`).remove();
+  };
+
+  const openPopup = () => {
+    setIsPopupOpen(true);
+  };
+
+  const closePopup = () => {
+    setIsPopupOpen(false);
+  };
 
   return (
     <div>
-      <div className="action-buttons">
-        <Button variant="contained" style={{ backgroundColor: " #e60000" }}>
-          Delete Book
-        </Button>
-        &nbsp;&nbsp;
-        <Button variant="contained" style={{ backgroundColor: "#00b38f" }}>
-          Update Book Details
-        </Button>
-      </div>
+      {isPopupOpen && (
+        <div className="backdrop">
+          <div className="book-issue-form">
+            <Updatebook PopupClose={closePopup} />
+          </div>
+        </div>
+      )}
       <div className="table">
-        <table className="customers">
-          <tr>
-            <th>Select</th>
-            <th>Book Name</th>
-            <th>Author</th>
-            <th>Book ID</th>
-            <th>Date of Purchase</th>
-            <th>Quantity</th>
-          </tr>
-          {bookList.map((res, key) => (
-            <tr key={key}>
-              <td>
-                <input type="checkbox"></input>
-              </td>
-              <td>{res.name}</td>
-              <td>{res.author}</td>
-              <td>{res.bookid}</td>
-              <td>{res.date}</td>
-              <td>{res.quantity}</td>
+        {bookList.length === 0 ? (
+          <p style={{ textAlign: "center" }}>No data found !</p>
+        ) : (
+          <table className="customers">
+            <tr>
+              <th>Sr.no</th>
+              <th>Book Name</th>
+              <th>Author</th>
+              <th>Book ID</th>
+              <th>Date of Purchase</th>
+              <th>Quantity</th>
+              <th style={{ textAlign: "center" }}>Action</th>
             </tr>
-          ))}
-        </table>
+            {Object.keys(bookList).map((id, index) => (
+              <tr key={id}>
+                <td>{index + 1}</td>
+                <td>{bookList[id].name}</td>
+                <td>{bookList[id].author}</td>
+                <td>{bookList[id].bookid}</td>
+                <td>{bookList[id].date}</td>
+                <td>{bookList[id].quantity}</td>
+                <td>
+                  {Object.keys(bookList).length === 1 ? (
+                    <div style={{ display: "flex", justifyContent: "center" }}>
+                      <Button
+                        variant="contained"
+                        style={{
+                          display: "flex",
+                          width: "115px",
+                          height: "20px",
+                          fontSize: "11px",
+                          borderRadius: "2px",
+                        }}
+                        disabled={true}
+                      >
+                        Delete Book
+                      </Button>
+                      &nbsp;&nbsp;
+                      <Link to={`/update/${id}`}>
+                        <Button
+                          variant="contained"
+                          style={{
+                            backgroundColor: "#00b38f",
+                            display: "flex",
+                            width: "115px",
+                            height: "20px",
+                            fontSize: "11px",
+                            borderRadius: "2px",
+                          }}
+                          onClick={openPopup}
+                        >
+                          Update
+                        </Button>
+                      </Link>
+                    </div>
+                  ) : (
+                    <div style={{ display: "flex", justifyContent: "center" }}>
+                      <Button
+                        variant="contained"
+                        onClick={() => handleBookDelete(id)}
+                        style={{
+                          backgroundColor: " #e60000",
+                          display: "flex",
+                          width: "115px",
+                          height: "20px",
+                          fontSize: "11px",
+                          borderRadius: "2px",
+                        }}
+                      >
+                        Delete Book
+                      </Button>
+                      &nbsp;&nbsp;
+                      <Link to={`/update/${id}`}>
+                        <Button
+                          variant="contained"
+                          style={{
+                            backgroundColor: "#00b38f",
+                            display: "flex",
+                            width: "115px",
+                            height: "20px",
+                            fontSize: "11px",
+                            borderRadius: "2px",
+                          }}
+                          onClick={openPopup}
+                        >
+                          Update
+                        </Button>
+                      </Link>
+                    </div>
+                  )}
+                </td>
+              </tr>
+            ))}
+          </table>
+        )}
       </div>
     </div>
   );

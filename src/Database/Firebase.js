@@ -1,5 +1,6 @@
-import firebase from "firebase/app";
-import "firebase/database";
+import firebase from "firebase/compat/app";
+import "firebase/compat/database";
+import { getAuth } from "firebase/auth";
 
 const firebaseCredentials = {
   apiKey: "AIzaSyDHUKUGCvRZu5dU8CvjKYYMYgifNwX0dFo",
@@ -11,5 +12,7 @@ const firebaseCredentials = {
   appId: "1:628666637720:web:c22ad1fc412f40cf431fed",
 };
 const fireDB = firebase.initializeApp(firebaseCredentials);
+
+export const auth = getAuth(fireDB);
 
 export default fireDB.database().ref();

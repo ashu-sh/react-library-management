@@ -201,7 +201,7 @@ function BookCirculation() {
                       setStatus("Returned");
                     }}
                   >
-                    Returne Book
+                    Return Book
                   </Button>
                 </div>
                 <input type="submit" value="Submit Records" />

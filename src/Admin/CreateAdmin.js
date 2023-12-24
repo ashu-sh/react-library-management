@@ -1,4 +1,3 @@
-// import axios from "axios";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -8,31 +7,34 @@ import { AiFillEye } from "react-icons/ai";
 import { AiFillEyeInvisible } from "react-icons/ai";
 import IconButton from "@mui/material/IconButton";
 import BackgroundPhoto from "../assets/Picture1.jpg";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import fireDB, { auth } from "../Database/Firebase";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../Database/Firebase";
+import { useNavigate } from "react-router-dom";
 
 // import { Button } from "@mui/material";
 
-function AdminLogin({ onLogin }) {
+function CreateAdmin() {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [passwordtoggler, setPasswordtoggler] = useState(false);
+
+  const navigate = useNavigate();
 
   const handlePasswordToggler = () => {
     setPasswordtoggler(!passwordtoggler);
   };
 
-  const handleLogin = async (e) => {
+  const handleSignup = async (e) => {
     e.preventDefault();
 
     try {
-      const Admin = await signInWithEmailAndPassword(auth, email, password);
+      const Admin = await createUserWithEmailAndPassword(auth, email, password);
       console.log(Admin);
-      onLogin();
-      toast.success(`Hey ${email} Welcome to LMS !`);
+      toast.success(`Hey ${email} Welcome to the family of LMS !`);
+      setTimeout(() => navigate("/login"), 600);
     } catch (err) {
       console.log(err.message);
-      toast.error(`Please enter valid credentails !`);
+      toast.error(`Something went wrong !`);
     }
   };
 
@@ -51,7 +53,7 @@ function AdminLogin({ onLogin }) {
     >
       <div className="login-form">
         <form
-          onSubmit={handleLogin}
+          onSubmit={handleSignup}
           className="log-form"
           style={{
             margin: "auto",
@@ -107,14 +109,18 @@ function AdminLogin({ onLogin }) {
 
           <br />
           <br />
-          <input className="admin-login" type="submit" value="LOGIN"></input>
+          <input
+            className="admin-login"
+            type="submit"
+            value="CREATE ADMIN"
+          ></input>
           <br />
           <br />
           <label className="Signuproute">
             <p>
-              New Admin ?&nbsp;&nbsp;
-              <Link to="/register" style={{ color: "#9900ff" }}>
-                SIGN UP
+              Already Registered ?&nbsp;&nbsp;
+              <Link to="/login" style={{ color: "#9900ff" }}>
+                SIGN IN
               </Link>
             </p>
           </label>
@@ -133,4 +139,4 @@ function AdminLogin({ onLogin }) {
   );
 }
 
-export default AdminLogin;
+export default CreateAdmin;

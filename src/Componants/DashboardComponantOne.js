@@ -7,8 +7,6 @@ import { toast } from "react-toastify";
 import { GrUserAdmin } from "react-icons/gr";
 import { PiStudentFill } from "react-icons/pi";
 import { MdLibraryBooks } from "react-icons/md";
-import StudentSearch from "../SearchComponant/StudentSearch";
-import BookSearch from "../SearchComponant/BookSearch";
 
 function DashboardComponantOne() {
   const [studentList, getStudentList] = useState([]);
@@ -43,8 +41,6 @@ function DashboardComponantOne() {
             _____________________
           </h3>
         </div>
-        <StudentSearch />
-        <BookSearch />
         <div className="dashboard-header">
           <h3>
             Dashboard <br />

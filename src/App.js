@@ -18,7 +18,9 @@ import BooksData from "./AllData/BooksData";
 import AdminLogin from "./Admin/AdminLogin";
 import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
-import Footer from "./Componants/Footer";
+// import BookSearch from "./SearchComponant/BookSearch";
+import StudentSearch from "./SearchComponant/StudentSearch";
+import CreateAdmin from "./Admin/CreateAdmin";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -32,7 +34,7 @@ function App() {
 
   const handleLoggedIn = (token) => {
     localStorage.setItem("token", token);
-    toast.success("Welcome to LMS !");
+    // toast.success("Welcome to LMS !");
     setLoggedIn(true);
   };
 
@@ -54,9 +56,10 @@ function App() {
                 element={[
                   <Navbar onLogout={handleLoggout} />,
                   <DashboardComponantOne />,
-                  <Footer />,
+                  <StudentSearch />,
                 ]}
               />
+
               <Route
                 path="/addstudent"
                 element={[<Navbar onLogout={handleLoggout} />, <AddStudents />]}
@@ -79,14 +82,6 @@ function App() {
                 element={[
                   <Navbar onLogout={handleLoggout} />,
                   <Students />,
-                  <DashboardMenu />,
-                ]}
-              />
-              <Route
-                path="/bookstore"
-                element={[
-                  <Navbar onLogout={handleLoggout} />,
-                  <BooksData />,
                   <DashboardMenu />,
                 ]}
               />
@@ -130,10 +125,31 @@ function App() {
                   <DashboardMenu />,
                 ]}
               />
+              <Route
+                path="/update/:id"
+                element={[
+                  <Navbar onLogout={handleLoggout} />,
+                  <BooksData />,
+                  <DashboardMenu />,
+                ]}
+              />
+              <Route
+                path="/profile/:id"
+                element={[
+                  <Navbar onLogout={handleLoggout} />,
+                  <Students />,
+                  <DashboardMenu />,
+                ]}
+              />
             </Route>
           </Routes>
         ) : (
-          <AdminLogin onLogin={handleLoggedIn} />
+          <>
+            <AdminLogin onLogin={handleLoggedIn} />
+            <Routes>
+              <Route path="/register" element={<CreateAdmin />} />
+            </Routes>
+          </>
         )}
       </BrowserRouter>
     </div>
