@@ -11,8 +11,11 @@
 }
 .action-buttons {
   margin: 50px 100px 0px 0px;
-  float: right;
+  float:left;
+  /* padding:40px; */
+  /* display:flex; */
 }
+
 
 .students td,
 .students th {

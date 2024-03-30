@@ -22,7 +22,7 @@ function Updatebook({ PopupClose }) {
   const { name, author, bookid, date, quantity } = state;
 
   const { id } = useParams();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   useEffect(() => {
     fireDB.child("libraryBookList").on("value", (snapshot) => {
@@ -91,7 +91,8 @@ function Updatebook({ PopupClose }) {
         quantity: "",
       });
 
-      setTimeout(() => navigate("/bookstore"), 500);
+      setTimeout(() => PopupClose(), 700);
+      
     }
   };
 

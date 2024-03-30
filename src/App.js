@@ -21,6 +21,12 @@ import { useEffect, useState } from "react";
 // import BookSearch from "./SearchComponant/BookSearch";
 import StudentSearch from "./SearchComponant/StudentSearch";
 import CreateAdmin from "./Admin/CreateAdmin";
+import UpdateStatus from "./DashMenu/UpdateStatus";
+import CirculatedBookData from "./AllData/CirculatedBookData";
+
+
+
+
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -130,6 +136,14 @@ function App() {
                 element={[
                   <Navbar onLogout={handleLoggout} />,
                   <BooksData />,
+                  <DashboardMenu />,
+                ]}
+              />
+              <Route
+                path="/status/:id"
+                element={[
+                  <Navbar onLogout={handleLoggout} />,
+                  <BookCirculation/>,
                   <DashboardMenu />,
                 ]}
               />

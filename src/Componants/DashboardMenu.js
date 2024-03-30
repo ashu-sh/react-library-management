@@ -41,8 +41,8 @@ function DashboardMenu() {
       </Link>
       <Link to="/support">
         <a>
-          <GoIssueReopened style={{ fontSize: "19px" }} />
-          &nbsp; Support
+          📩
+          &nbsp;Support
         </a>
       </Link>
     </div>

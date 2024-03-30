@@ -5,6 +5,9 @@ import fireDB from "../Database/Firebase";
 import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
 import Updatestudent from "./Updatestudent";
+
+
+
 function Students() {
   const [studentList, setStudentList] = useState({});
   const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -45,7 +48,7 @@ function Students() {
         </div>
       )}
       <div className="table">
-        {studentList.length === 0 ? (
+        {Object.keys(studentList).length === 0 ? (
           <p style={{ textAlign: "center" }}>Data not found !</p>
         ) : (
           <table className="customers">

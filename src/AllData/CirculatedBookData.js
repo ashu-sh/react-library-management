@@ -1,58 +1,161 @@
-import React from "react";
+import React, { useState, useEffect, filteredData } from "react";
 import "../Compstyling/CirculatedBookdata.css";
-// import Badge from "@mui/material/Badge";
+import { Link } from "react-router-dom";
+import fireDB from "../Database/Firebase";
+import { Button } from "@mui/material";
+import { toast } from "react-toastify";
+import UpdateStatus from "../DashMenu/UpdateStatus";
 
-function CirculatedBookData({ state }) {
+function CirculatedBookData() {
+  const [bookList, setBookList] = useState({});
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+
+  useEffect(() => {
+    fireDB.child("circulatedBooksDatabase").on("value", (snapshot) => {
+      const data = snapshot.val();
+
+      if (data !== null) {
+        setBookList({ ...data });
+      } else {
+        setBookList({});
+      }
+    });
+
+    return () => {
+      setBookList({});
+    };
+  }, []);
+
+  const openPopup = () => {
+    setIsPopupOpen(true);
+  };
+
+  const closePopup = () => {
+    setIsPopupOpen(false);
+  };
+
+  const handleBookDelete = (id) => {
+    if (window.confirm("Are you sure to delete this record ?")) {
+      fireDB.child(`circulatedBooksDatabase/${id}`).remove();
+    }
+    toast.success('Deleted !')
+  };
+
   return (
-    <div className="data-table">
-      <table className="students">
-        <tr>
-          <th>Book Name</th>
-          <th>Author</th>
-          <th>Book ID</th>
-          <th>Borrower ID</th>
-          <th>Date of issue</th>
-          <th>Date of return</th>
-          <th>Status</th>
-        </tr>
-        {state.map((item, index) => (
-          <>
-            <tr key={index}>
-              <td>{item.name}</td>
-              <td>{item.authorname}</td>
-              <td>{item.bookid}</td>
-              <td>{item.borrowerid}</td>
-              <td>{item.dateOfissue}</td>
-              <td>{item.dateOfreturn}</td>
-              {item.status === "Issued" ? (
-                <td>
-                  <p
-                    style={{
-                      color: "#ff3333",
-                      fontWeight: "800",
-                      fontFamily: "monospace",
-                    }}
-                  >
-                    {item.status}
-                  </p>
-                </td>
-              ) : (
-                <td>
-                  <p
-                    style={{
-                      color: "green",
-                      fontWeight: "800",
-                      fontFamily: "monospace",
-                    }}
-                  >
-                    {item.status}
-                  </p>
-                </td>
-              )}
+    <div>
+      {isPopupOpen && (
+        <div className="backdrop">
+          <div className="book-issue-form">
+            <UpdateStatus PopupClose={closePopup} />
+          </div>
+        </div>
+      )}
+
+      <div className="data-table">
+        {Object.keys(bookList).length === 0 ? (
+          <p style={{ textAlign: "center",margin:"50px" }}>No Data Found !</p>
+        ) : (
+          <table className="students">
+            <tr>
+              <th>Sr.no.</th>
+              <th>Book Name</th>
+              <th>Author</th>
+              <th>Book ID</th>
+              <th>Borrower ID</th>
+              <th>Date of issue</th>
+              <th>Date of return</th>
+              <th>Status</th>
+              <th style={{textAlign:"center"}}>Actions</th>
             </tr>
-          </>
-        ))}
-      </table>
+
+            {Object.keys(bookList).map((id, index) => (
+              <>
+                <tr key={index}>
+                  <td>{index + 1}</td>
+                  <td>{bookList[id].name}</td>
+                  <td>{bookList[id].authorname}</td>
+                  <td>{bookList[id].bookid}</td>
+                  <td>{bookList[id].borrowerid}</td>
+                  <td>{bookList[id].dateOfissue}</td>
+                  <td>{bookList[id].dateOfreturn}</td>
+                  {bookList[id].status === "Issued" ? (
+                    <td>
+                      <p
+                        style={{
+                          color: "#ff3333",
+                          fontWeight: "800",
+                          fontFamily: "monospace",
+                        }}
+                      >
+                        {bookList[id].status}
+                      </p>
+                    </td>
+                  ) : bookList[id].status === "Returned" ? (
+                    <td>
+                      <p
+                        style={{
+                          color: "green",
+                          fontWeight: "800",
+                          fontFamily: "monospace",
+                        }}
+                      >
+                        {bookList[id].status}
+                      </p>
+                    </td>
+                  ) : (
+                    <td>
+                      <p
+                        style={{
+                          color: "orange",
+                          fontWeight: "800",
+                          fontFamily: "monospace",
+                        }}
+                      >
+                        {bookList[id].status}
+                      </p>
+                    </td>
+                  )}
+                  <td>
+                    <Link to={`/status/${id}`}>
+                      <div style={{ display: "flex",justifyContent:"center" }}>
+                        <Button
+                          variant="contained"
+                          style={{
+                            backgroundColor: "#00b38f",
+                            display: "flex",
+                            width: "90px",
+                            height: "20px",
+                            fontSize: "11px",
+                            borderRadius: "2px",
+                          }}
+                          onClick={openPopup}
+                        >
+                          change
+                        </Button>
+                        &nbsp;&nbsp;&nbsp;
+                        <Button
+                          variant="contained"
+                          style={{
+                            backgroundColor: "#e60000",
+                            display: "flex",
+                            width: "90px",
+                            height: "20px",
+                            fontSize: "11px",
+                            borderRadius: "2px",
+                          }}
+                          onClick={() => handleBookDelete(id)}
+                        >
+                          Delete
+                        </Button>
+                      </div>
+                    </Link>
+                  </td>
+                </tr>
+              </>
+            ))}
+          </table>
+        )}
+      </div>
     </div>
   );
 }

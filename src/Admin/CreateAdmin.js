@@ -29,12 +29,13 @@ function CreateAdmin() {
 
     try {
       const Admin = await createUserWithEmailAndPassword(auth, email, password);
-      console.log(Admin);
+
       toast.success(`Hey ${email} Welcome to the family of LMS !`);
+      console.log(Admin);
       setTimeout(() => navigate("/login"), 600);
     } catch (err) {
       console.log(err.message);
-      toast.error(`Something went wrong !`);
+      toast.error(`User Already Exist !`);
     }
   };
 

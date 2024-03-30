@@ -4,55 +4,29 @@ import { toast } from "react-toastify";
 import fireDB from "../Database/Firebase";
 import Button from "@mui/material/Button";
 import CirculatedBookData from "../AllData/CirculatedBookData";
+import BookFilters from "../filters/BookFilters";
+import { useParams, useNavigate } from "react-router-dom";
+
+const books = {
+  name: "",
+  authorname: "",
+  bookid: "",
+  borrowerid: "",
+  dateOfissue: "",
+  dateOfreturn: "",
+  status: "Issued",
+};
 
 function BookCirculation() {
-  const [name, setName] = useState("");
-  const [authorname, setAuthor] = useState("");
-  const [bookid, setBookid] = useState("");
-  const [borrowerid, setBorrowerid] = useState("");
-  const [dateOfissue, setaDateofIssue] = useState("");
-  const [dateOfreturn, setaDateofReturn] = useState("");
-  const [status, setStatus] = useState("Issued");
   // const [flag, setFlag] = useState(false);
-
+  const [formData, setFormData] = useState(books);
   const [state, setState] = useState([]);
+  const [editingId, setEditingId] = useState(null);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [searchbook, setSearchbook] = useState("");
+  const [statusFilter, setStatusFilter] = useState("all");
 
-  const HandleButtonAction = (event) => {
-    event.preventDefault();
-
-    const books = {
-      name,
-      authorname,
-      bookid,
-      borrowerid,
-      dateOfissue,
-      dateOfreturn,
-      status,
-    };
-
-    console.log(books);
-
-    if (!name || !authorname || !bookid || !borrowerid || !status) {
-      toast.error("Please enter valid data !");
-    } else {
-      fireDB.child("circulatedBooksDatabase").push(books, (err) => {
-        if (err) {
-          toast.error(err);
-        } else {
-          toast.success("Book Issued Succesfully");
-        }
-      });
-    }
-
-    setName("");
-    setAuthor("");
-    setBookid("");
-    setBorrowerid("");
-    setaDateofIssue("");
-    setaDateofReturn("");
-  };
-
+  const { name, authorname, bookid, borrowerid, dateOfissue, dateOfreturn, status } = formData;
   // circulated Books
 
   useEffect(() => {
@@ -69,6 +43,39 @@ function BookCirculation() {
     }
   }, []);
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const HandleButtonAction = (event) => {
+    event.preventDefault();
+    console.log(books);
+   
+      fireDB.child("circulatedBooksDatabase").push(formData, (err) => {
+        if (err) {
+          toast.error(err);
+        } else {
+          toast.success("Book Issued Succesfully");
+        }
+      });
+
+    setFormData(books);
+  };
+
+ 
+  const Filtered = state.filter((item) => {
+    const searchResults = item.borrowerid
+      .toLowerCase()
+      .includes(searchbook.toLowerCase());
+    const status1 = statusFilter === "all" || item.status === statusFilter;
+
+    return searchResults && status1;
+  });
+
   const openPopup = () => {
     setIsPopupOpen(true);
   };
@@ -76,6 +83,14 @@ function BookCirculation() {
   const closePopup = () => {
     setIsPopupOpen(false);
     // refreshPage();
+  };
+
+  const handleSearchBook = (e) => {
+    setSearchbook(e.target.value);
+  };
+
+  const handleStatus = (e) => {
+    setStatusFilter(e.target.value);
   };
 
   return (
@@ -94,16 +109,14 @@ function BookCirculation() {
                   borderRadius: "4px",
                 }}
               >
-                <label htmlFor="name">Book Name</label>
+                <label htmlFor="name">Book Name </label>
                 <input
                   type="text"
                   id="name"
                   name="name"
                   placeholder="Book name"
                   value={name}
-                  onChange={(e) => {
-                    setName(e.target.value);
-                  }}
+                  onChange={handleChange}
                 />
                 <label htmlFor="authorname">Author</label>
                 <input
@@ -112,9 +125,7 @@ function BookCirculation() {
                   name="authorname"
                   placeholder="author name"
                   value={authorname}
-                  onChange={(e) => {
-                    setAuthor(e.target.value);
-                  }}
+                  onChange={handleChange}
                 />
                 <label htmlFor="bookid">Book ID</label>
                 <input
@@ -123,9 +134,7 @@ function BookCirculation() {
                   name="bookid"
                   placeholder="Book ID"
                   value={bookid}
-                  onChange={(e) => {
-                    setBookid(e.target.value);
-                  }}
+                  onChange={handleChange}
                 />
                 <label htmlFor="borrowerid">Borrower id</label>
                 <input
@@ -134,9 +143,7 @@ function BookCirculation() {
                   name="borrowerid"
                   placeholder="borrower id"
                   value={borrowerid}
-                  onChange={(e) => {
-                    setBorrowerid(e.target.value);
-                  }}
+                  onChange={handleChange}
                 />
                 <div
                   style={{
@@ -145,8 +152,8 @@ function BookCirculation() {
                     // justifyContent: "space-between",
                   }}
                 >
-                  <label htmlFor="dateOfreturn">Date of Return</label>
-                  <label htmlFor="dateOfissue">Date of Issue</label>
+                  <label htmlFor="dateOfreturn">Date of Issue</label>
+                  <label htmlFor="dateOfissue">Date of Return</label>
                 </div>
                 <div
                   style={{
@@ -162,9 +169,7 @@ function BookCirculation() {
                     placeholder="Date of issue"
                     value={dateOfissue}
                     style={{ margin: "8px 0px 5px 0px" }}
-                    onChange={(e) => {
-                      setaDateofIssue(e.target.value);
-                    }}
+                    onChange={handleChange}
                   />
                   <br />
                   <input
@@ -173,36 +178,18 @@ function BookCirculation() {
                     name="dateOfreturn"
                     placeholder="Date of return"
                     value={dateOfreturn}
-                    onChange={(e) => {
-                      setaDateofReturn(e.target.value);
-                    }}
+                    onChange={handleChange}
                   />
                 </div>
                 <br />
                 <label htmlFor="statusOfbook">Action</label>
                 <br />
                 <div style={{ margin: "10px 0", textAlign: "center" }}>
-                  <Button
-                    variant="contained"
-                    disabled={dateOfissue === "" ? true : false}
-                    style={{ backgroundColor: "grey" }}
-                    onClick={(e) => {
-                      setStatus("Issued");
-                    }}
-                  >
-                    Issue Book
-                  </Button>
-                  &nbsp;&nbsp;&nbsp;
-                  <Button
-                    variant="contained"
-                    disabled={dateOfreturn === "" ? true : false}
-                    style={{ backgroundColor: "#ff4d4d" }}
-                    onClick={(e) => {
-                      setStatus("Returned");
-                    }}
-                  >
-                    Return Book
-                  </Button>
+                  <select name="status" value={status} onChange={handleChange}>
+                    <option value="Issued">Issued</option>
+                    <option value="Returned">Returned</option>
+                </select>
+                  
                 </div>
                 <input type="submit" value="Submit Records" />
                 <Button
@@ -223,17 +210,35 @@ function BookCirculation() {
         )}
         <div>
           <div className="action-buttons">
+            <input
+              type="text"
+              placeholder="Search by borrower id"
+              value={searchbook}
+              onChange={handleSearchBook}
+              style={{ borderRadius: "2px" }}
+            ></input>
+            <br />
             <Button
               variant="contained"
-              style={{ backgroundColor: "#00b38f" }}
+              style={{ backgroundColor: "#00b38f", width: "100%",height: "30px"}}
               onClick={openPopup}
             >
-              Issue Book / Return Book
+              Issue Book
             </Button>
             &nbsp;&nbsp;
           </div>
           <div>
-            <CirculatedBookData state={state} />
+            <BookFilters
+              handleStatus={handleStatus}
+              statusFilter={statusFilter}
+            />
+            <CirculatedBookData
+              state={state}
+              Filtered={Filtered}
+              openPopup={openPopup}
+              // handleCheckbox={handleCheckbox}
+              // selectedBook={selectedBook}
+            />
           </div>
         </div>
       </div>

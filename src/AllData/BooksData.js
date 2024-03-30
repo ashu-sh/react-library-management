@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "../Compstyling/Books.css";
-// import { toast } from "react-toastify";
+import { toast } from "react-toastify";
 import fireDB from "../Database/Firebase";
 import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
@@ -27,8 +27,16 @@ function Books() {
   }, []);
 
   const handleBookDelete = (id) => {
-    fireDB.child(`libraryBookList/${id}`).remove();
+    if (window.confirm("Are you sure to delete this record ?")) {
+      fireDB.child(`libraryBookList/${id}`).remove();
+      toast.success('Deleted !');
+    } else {
+      fireDB.child(`libraryBookList/${id}`);
+      toast.error('Cancelled !')
+    }
+    
   };
+
 
   const openPopup = () => {
     setIsPopupOpen(true);
@@ -48,7 +56,7 @@ function Books() {
         </div>
       )}
       <div className="table">
-        {bookList.length === 0 ? (
+        {Object.keys(bookList).length === 0 ? (
           <p style={{ textAlign: "center" }}>No data found !</p>
         ) : (
           <table className="customers">

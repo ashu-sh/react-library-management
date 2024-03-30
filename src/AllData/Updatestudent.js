@@ -21,7 +21,7 @@ function Updatestudent({ PopupClose }) {
   const { name, regId, className, department, rollNo } = state;
 
   const { id } = useParams();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   useEffect(() => {
     fireDB.child("studentMemberShipData").on("value", (snapshot) => {
@@ -90,7 +90,8 @@ function Updatestudent({ PopupClose }) {
       department: "",
       rollNo: "",
     });
-    setTimeout(() => navigate("/students"), 500);
+    setTimeout(() => PopupClose(), 700);
+    
   };
 
   return (

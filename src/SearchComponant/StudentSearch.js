@@ -16,15 +16,8 @@ function StudentSearch() {
             alignContent: "center",
           }}
         >
-          <label htmlFor="name">Student name</label>
-          <input
-            type="studentName"
-            id="name"
-            name="name"
-            placeholder="student name"
-            value=""
-          />
-          <label htmlFor="regId">Registartion number</label>
+          
+          <label htmlFor="regId">Student Registartion number</label>
           <input
             type="regnumber"
             id="regId"
@@ -32,25 +25,8 @@ function StudentSearch() {
             placeholder="member ID"
             value=""
           />
-          <label htmlFor="rollno">University registration number</label>
-          <input
-            type="prnNumber"
-            id="rollno"
-            name="rollno"
-            placeholder="PRN number"
-            value=""
-          />
-          &nbsp;&nbsp;
-          <label htmlFor="className">Class</label>
-          <input
-            type="class"
-            id="className"
-            name="className"
-            placeholder="Class name"
-            value=""
-          />
           <button className="submit-search" type="submit">
-            Search
+            Search Student
           </button>
         </form>
       </div>
@@ -80,16 +56,8 @@ function StudentSearch() {
             placeholder="author "
             value=""
           />
-          <label htmlFor="bookId">Book ID</label>
-          <input
-            type="bookId"
-            id="bookId"
-            name="bookId"
-            placeholder="book ID"
-            value=""
-          />
           <button className="submit-search" type="submit">
-            Search
+            Search Book
           </button>
         </form>
       </div>

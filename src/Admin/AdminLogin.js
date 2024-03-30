@@ -9,7 +9,7 @@ import { AiFillEyeInvisible } from "react-icons/ai";
 import IconButton from "@mui/material/IconButton";
 import BackgroundPhoto from "../assets/Picture1.jpg";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import fireDB, { auth } from "../Database/Firebase";
+import { auth } from "../Database/Firebase";
 
 // import { Button } from "@mui/material";
 
@@ -29,7 +29,7 @@ function AdminLogin({ onLogin }) {
       const Admin = await signInWithEmailAndPassword(auth, email, password);
       console.log(Admin);
       onLogin();
-      toast.success(`Hey ${email} Welcome to LMS !`);
+      toast.success(`Hey ${email} Welcome to LMS ! `);
     } catch (err) {
       console.log(err.message);
       toast.error(`Please enter valid credentails !`);
