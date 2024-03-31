@@ -1,12 +1,14 @@
-import React, { useState, useEffect, filteredData } from "react";
+import React, { useState, useEffect} from "react";
 import "../Compstyling/CirculatedBookdata.css";
 import { Link } from "react-router-dom";
 import fireDB from "../Database/Firebase";
 import { Button } from "@mui/material";
 import { toast } from "react-toastify";
 import UpdateStatus from "../DashMenu/UpdateStatus";
+import { ScaleLoader } from "react-spinners";
 
-function CirculatedBookData() {
+
+function CirculatedBookData({Filtered, state}) {
   const [bookList, setBookList] = useState({});
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
@@ -37,8 +39,12 @@ function CirculatedBookData() {
   const handleBookDelete = (id) => {
     if (window.confirm("Are you sure to delete this record ?")) {
       fireDB.child(`circulatedBooksDatabase/${id}`).remove();
+      toast.success('Deleted !');
+    } else {
+      fireDB.child(`circulatedBooksDatabase/${id}`);
+      toast.error('Cancelled !');
     }
-    toast.success('Deleted !')
+    
   };
 
   return (
@@ -52,8 +58,13 @@ function CirculatedBookData() {
       )}
 
       <div className="data-table">
-        {Object.keys(bookList).length === 0 ? (
-          <p style={{ textAlign: "center",margin:"50px" }}>No Data Found !</p>
+        {Object.keys(state).length === 0 ? (
+          <div className="backdrop">
+              <div className="preloader">
+                 <ScaleLoader color="#fff" />
+                 <p>Loading....</p>
+              </div>
+          </div>
         ) : (
           <table className="students">
             <tr>
@@ -68,17 +79,17 @@ function CirculatedBookData() {
               <th style={{textAlign:"center"}}>Actions</th>
             </tr>
 
-            {Object.keys(bookList).map((id, index) => (
+            {Object.keys(Filtered).map((id, index) => (
               <>
                 <tr key={index}>
                   <td>{index + 1}</td>
-                  <td>{bookList[id].name}</td>
-                  <td>{bookList[id].authorname}</td>
-                  <td>{bookList[id].bookid}</td>
-                  <td>{bookList[id].borrowerid}</td>
-                  <td>{bookList[id].dateOfissue}</td>
-                  <td>{bookList[id].dateOfreturn}</td>
-                  {bookList[id].status === "Issued" ? (
+                  <td>{Filtered[id].name}</td>
+                  <td>{Filtered[id].authorname}</td>
+                  <td>{Filtered[id].bookid}</td>
+                  <td>{Filtered[id].borrowerid}</td>
+                  <td>{Filtered[id].dateOfissue}</td>
+                  <td>{Filtered[id].dateOfreturn}</td>
+                  {Filtered[id].status === "Issued" ? (
                     <td>
                       <p
                         style={{
@@ -87,10 +98,10 @@ function CirculatedBookData() {
                           fontFamily: "monospace",
                         }}
                       >
-                        {bookList[id].status}
+                        {Filtered[id].status}
                       </p>
                     </td>
-                  ) : bookList[id].status === "Returned" ? (
+                  ) : Filtered[id].status === "Returned" ? (
                     <td>
                       <p
                         style={{
@@ -99,7 +110,7 @@ function CirculatedBookData() {
                           fontFamily: "monospace",
                         }}
                       >
-                        {bookList[id].status}
+                        {Filtered[id].status}
                       </p>
                     </td>
                   ) : (
@@ -111,7 +122,7 @@ function CirculatedBookData() {
                           fontFamily: "monospace",
                         }}
                       >
-                        {bookList[id].status}
+                        {Filtered[id].status}
                       </p>
                     </td>
                   )}

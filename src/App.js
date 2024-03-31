@@ -45,9 +45,13 @@ function App() {
   };
 
   const handleLoggout = (token) => {
-    localStorage.removeItem("token", token);
-    toast.success("Thank you for using LMS ! See You Again");
-    setLoggedIn(false);
+
+    if (window.confirm("Are you sure want to Log out ?")) {
+      localStorage.removeItem("token", token);
+      toast.success("Thank you for using LMS ! See You Again");
+      setLoggedIn(false);
+    }
+    
   };
 
   return (

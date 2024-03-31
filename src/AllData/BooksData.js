@@ -5,6 +5,8 @@ import fireDB from "../Database/Firebase";
 import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
 import Updatebook from "./Updatebook";
+import { ScaleLoader } from "react-spinners";
+
 
 function Books() {
   const [bookList, setBookList] = useState({});
@@ -57,7 +59,12 @@ function Books() {
       )}
       <div className="table">
         {Object.keys(bookList).length === 0 ? (
-          <p style={{ textAlign: "center" }}>No data found !</p>
+          <div className="backdrop">
+            <div className="preloader">
+                <ScaleLoader color="#fff" />
+                <p>Loading....</p>
+            </div>
+          </div>
         ) : (
           <table className="customers">
             <tr>

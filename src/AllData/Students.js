@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import "../Compstyling/Students.css";
-// import { toast } from "react-toastify";
 import fireDB from "../Database/Firebase";
 import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
 import Updatestudent from "./Updatestudent";
-
+import { toast } from "react-toastify";
+import { ScaleLoader } from "react-spinners";
 
 
 function Students() {
@@ -28,7 +28,15 @@ function Students() {
   }, []);
 
   const handleDeleteStudent = (id) => {
-    fireDB.child(`studentMemberShipData/${id}`).remove();
+
+    if (window.confirm("Are you sure to delete this record ?")) {
+      fireDB.child(`studentMemberShipData/${id}`).remove();
+      toast.success('Deleted !');
+    } else {
+      fireDB.child(`studentMemberShipData/${id}`);
+      toast.error("Cancelled !")
+    }
+    
   };
   const openPopup = () => {
     setIsPopupOpen(true);
@@ -49,7 +57,12 @@ function Students() {
       )}
       <div className="table">
         {Object.keys(studentList).length === 0 ? (
-          <p style={{ textAlign: "center" }}>Data not found !</p>
+        <div className="backdrop">
+          <div className="preloader">
+             <ScaleLoader color="#fff" />
+             <p>Loading....</p>
+          </div>
+        </div>
         ) : (
           <table className="customers">
             <tr>
