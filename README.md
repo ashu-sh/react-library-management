@@ -10,6 +10,9 @@
 ![image](https://github.com/ashu-sh/react-library-management/assets/102554445/621086e1-270b-47c7-bb62-8154ec4c4e18)
 ![image](https://github.com/ashu-sh/react-library-management/assets/102554445/d66b7999-062a-407c-89f2-c3d6ad6946df)
 ![image](https://github.com/ashu-sh/react-library-management/assets/102554445/72576985-38e6-467e-a5d7-22997e912ee7)
+Email response Feature - Student registration success.
+![image](https://github.com/ashu-sh/react-library-management/assets/102554445/6247dbde-0aec-4c5b-859d-d5a1167a0438)
+
 
 
 
