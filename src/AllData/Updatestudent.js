@@ -90,7 +90,7 @@ function Updatestudent({ PopupClose }) {
       department: "",
       rollNo: "",
     });
-    setTimeout(() => PopupClose(), 700);
+    setTimeout(() => PopupClose(), 800);
     
   };
 

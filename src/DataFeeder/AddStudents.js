@@ -3,11 +3,13 @@ import "../Compstyling/AddStudents.css";
 import { toast } from "react-toastify";
 import fireDB from "../Database/Firebase";
 import { ScaleLoader } from "react-spinners";
+import emailjs from 'emailjs-com';
 // import { useNavigate } from "react-router-dom";
 
 const initalState = {
   name: "",
   regId: "",
+  email:"",
   className: "",
   department: "",
   rollNo: "",
@@ -17,7 +19,7 @@ function AddStudents() {
   const [state, setState] = useState(initalState);
   const [loading, setLoading] = useState(false);
 
-  const { name, regId, className, department, rollNo } = state;
+  const { name, regId, email, className, department, rollNo } = state;
 
   // const Redirect = useNavigate();
 
@@ -31,7 +33,18 @@ function AddStudents() {
 
     setLoading(true);
 
-    if (!name || !regId || !className || !department || !rollNo) {
+    emailjs.sendForm('service_xl4tkdf', 'template_s5hzocj', e.target, 'twvkjEux3YfiVS0Nc').then((result) => {
+      console.log(result.text);
+      toast.success('Details has been sent to student email successfully !');
+
+    }, (error) => {
+      console.log(error.text);
+      toast.error('An error occurred, please try again later !');
+    })
+
+    // #################################################################################
+
+    if (!name || !regId || !email || !className || !department || !rollNo) {
       toast.error("Please provide information");
       setLoading(false);
     } else {
@@ -49,19 +62,19 @@ function AddStudents() {
     setState({
       name: "",
       regId: "",
+      email:"",
       className: "",
       department: "",
       rollNo: "",
     });
   };
 
-  // ######################################
+  // ###################################################################
 
   return (
     <div>
       {loading && (
         <div className="backdrop">
-          {/* Your preloader/spinner component */}
           <div className="preloader">
             <ScaleLoader color="#fff" />
             <p>Loading....</p>
@@ -94,6 +107,15 @@ function AddStudents() {
             name="department"
             placeholder="department"
             value={department}
+            onChange={handleInputFields}
+          />
+           <label htmlFor="email">Email Address</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="email"
+            value={email}
             onChange={handleInputFields}
           />
           <label htmlFor="regId">Card ID</label>

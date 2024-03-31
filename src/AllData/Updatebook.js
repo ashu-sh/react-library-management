@@ -66,7 +66,7 @@ function Updatebook({ PopupClose }) {
             toast.error(err);
             setLoading(false);
           } else {
-            toast.success("Already Updated !");
+            toast.success("Book is already Updated !");
             setLoading(false);
           }
         });
