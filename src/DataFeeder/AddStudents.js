@@ -33,6 +33,8 @@ function AddStudents() {
 
     setLoading(true);
 
+    // Email feature for sending student details on email >>>
+
     emailjs.sendForm('service_xl4tkdf', 'template_s5hzocj', e.target, 'twvkjEux3YfiVS0Nc').then((result) => {
       console.log(result.text);
       toast.success('Details has been sent to student email successfully !');
@@ -43,6 +45,8 @@ function AddStudents() {
     })
 
     // #################################################################################
+
+    // Submission of student data to database >>>
 
     if (!name || !regId || !email || !className || !department || !rollNo) {
       toast.error("Please provide information");
