@@ -9,7 +9,6 @@ import DashboardMenu from "./Componants/DashboardMenu";
 import AddTeacher from "./DataFeeder/AddTeacher";
 import AddBook from "./DataFeeder/AddBook";
 import Allusers from "./AllData/Allusers";
-import Users from "./DashMenu/Users";
 import Otherinfo from "./DashMenu/Otherinfo";
 import BookCirculation from "./DashMenu/BookCirculation";
 import Support from "./DashMenu/Support";
@@ -21,6 +20,7 @@ import CreateAdmin from "./Admin/CreateAdmin";
 import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
 import StatusControl from "./AllData/StatusControl";
+import Teachers from "./AllData/Teachers";
 // import BookSearch from "./SearchComponant/BookSearch";
 // import UpdateStatus from "./RecordUpdater/UpdateStatus";
 // import CirculatedBookData from "./AllData/CirculatedBookData";
@@ -81,14 +81,6 @@ function App() {
               />
               <Route path="/addbook" element={[<Navbar />, <AddBook />]} />
               <Route
-                path="/All-users"
-                element={[
-                  <Navbar onLogout={handleLoggout} />,
-                  <DashboardMenu />,
-                  <Allusers />,
-                ]}
-              />
-              <Route
                 path="/students"
                 element={[
                   <Navbar onLogout={handleLoggout} />,
@@ -96,11 +88,17 @@ function App() {
                   <DashboardMenu />,
                 ]}
               />
-              <Route
-                path="/user"
+               <Route
+                path="/staffs"
                 element={[
                   <Navbar onLogout={handleLoggout} />,
-                  <Users />,
+                  <Teachers/>,
+                  <DashboardMenu />,
+                ]}
+              />
+              <Route
+                element={[
+                  <Navbar onLogout={handleLoggout} />,
                   <DashboardMenu />,
                 ]}
               />
@@ -165,6 +163,14 @@ function App() {
                 element={[
                   <Navbar onLogout={handleLoggout} />,
                   <Students />,
+                  <DashboardMenu />,
+                ]}
+              />
+              <Route
+                path="/staffs/:id"
+                element={[
+                  <Navbar onLogout={handleLoggout} />,
+                  <Teachers/>,
                   <DashboardMenu />,
                 ]}
               />

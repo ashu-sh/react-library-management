@@ -11,7 +11,7 @@ import { MdLibraryBooks } from "react-icons/md";
 function DashboardComponantOne() {
   const [studentList, getStudentList] = useState([]);
   const [bookList, getBookList] = useState([]);
-
+  const [teacherList, setTeacherList] = useState({});
   //fetch data from firebase
   useEffect(() => {
     try {
@@ -26,6 +26,12 @@ function DashboardComponantOne() {
         const BookArray = Object.values(fetchedBookList); //convert object to the array to get the length
         getBookList(BookArray);
       });
+      fireDB.child("TecherMembershipData").on("value", (data) => {
+        const fetchedTeacherList = data.val();
+        const TeacherArray = Object.values(fetchedTeacherList); //convert object to the array to get the length
+        setTeacherList(TeacherArray);
+      });
+
     } catch (error) {
       toast.error("Check your internet connection", error);
     }
@@ -50,8 +56,8 @@ function DashboardComponantOne() {
         <div className="EnrollmentGrid">
           <div className="flex-item-left">
             <div className="Numbers">
-              <h2>0</h2>
-              <p>Active users</p>
+              <h2>{teacherList.length}</h2>
+              <p>Active Staff</p>
             </div>
             <GrUserAdmin
               style={{
@@ -64,9 +70,9 @@ function DashboardComponantOne() {
                 opacity: "0.4",
               }}
             />
-            <Link to="/All-users">
+            <Link to="/staffs">
               <button className="view-btn">
-                All users{" "}
+                All staff&nbsp;
                 <FaArrowCircleRight
                   style={{ margin: "3px", color: "#fff", fontSize: "13px" }}
                 />
@@ -94,7 +100,7 @@ function DashboardComponantOne() {
                 className="view-btn"
                 style={{ backgroundColor: "#e60000" }}
               >
-                View
+                View&nbsp;
                 <FaArrowCircleRight
                   style={{ margin: "3px", color: "#fff", fontSize: "13px" }}
                 />
@@ -122,7 +128,7 @@ function DashboardComponantOne() {
                 className="view-btn"
                 style={{ backgroundColor: "#8600b3" }}
               >
-                View
+                View&nbsp;
                 <FaArrowCircleRight
                   style={{ margin: "3px", color: "#fff", fontSize: "13px" }}
                 />

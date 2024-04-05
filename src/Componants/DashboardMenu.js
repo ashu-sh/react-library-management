@@ -15,12 +15,6 @@ function DashboardMenu() {
           &nbsp; Dashboard
         </a>
       </Link>
-      <Link to="/user">
-        <a>
-          <LuUserSquare2 style={{ fontSize: "19px" }} />
-          &nbsp; Users
-        </a>
-      </Link>
       <Link to="/bookstore">
         <a>
           <IoBookSharp style={{ fontSize: "19px" }} />

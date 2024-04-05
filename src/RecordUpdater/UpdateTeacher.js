@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react'
 import { useParams} from "react-router-dom";
 import { toast } from "react-toastify";
 import fireDB from "../Database/Firebase";
@@ -6,26 +6,27 @@ import fireDB from "../Database/Firebase";
 import { ScaleLoader } from "react-spinners";
 import Button from "@mui/material/Button";
 
+
 const initalState = {
   name: "",
   regId: "",
-  className: "",
+  email: "",
   department: "",
-  rollNo: "",
 };
 
-function Updatestudent({ PopupClose }) {
+function UpdateTeacher({PopupClose}) {
+
   const [state, setState] = useState(initalState);
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(false);
 
-  const { name, regId, className, department, rollNo } = state;
+  const { name, regId, department, email } = state;
 
   const { id } = useParams();
   // const navigate = useNavigate();
 
   useEffect(() => {
-    fireDB.child("studentMemberShipData").on("value", (snapshot) => {
+    fireDB.child("TecherMembershipData").on("value", (snapshot) => {
       if (snapshot.val() !== null) {
         setData({ ...snapshot.val() });
       } else {
@@ -56,12 +57,12 @@ function Updatestudent({ PopupClose }) {
 
     setLoading(true);
 
-    if (!name || !regId || !className || !department || !rollNo) {
+    if (!name || !regId || !email || !department) {
       toast.error("Please provide information");
       setLoading(false);
     } else {
       if (!id) {
-        fireDB.child("studentMemberShipData").push(state, (err) => {
+        fireDB.child("TecherMembershipData").push(state, (err) => {
           if (err) {
             toast.error(err);
             setLoading(false);
@@ -71,7 +72,7 @@ function Updatestudent({ PopupClose }) {
           }
         });
       } else {
-        fireDB.child(`studentMemberShipData/${id}`).set(state, (err) => {
+        fireDB.child(`TecherMembershipData/${id}`).set(state, (err) => {
           if (err) {
             toast.error(err);
             setLoading(false);
@@ -87,16 +88,15 @@ function Updatestudent({ PopupClose }) {
     setState({
       name: "",
       regId: "",
-      className: "",
       department: "",
-      rollNo: "",
+      email: "",
     });
     setTimeout(() => PopupClose(), 800);
     
   };
-
   return (
     <div>
+<div>
       {loading && (
         <div className="backdrop">
           <div className="preloader">
@@ -120,7 +120,7 @@ function Updatestudent({ PopupClose }) {
             type="text"
             id="name"
             name="name"
-            placeholder="student name"
+            placeholder="staff name"
             value={name || ""}
             onChange={handleInputFields}
           />
@@ -132,32 +132,23 @@ function Updatestudent({ PopupClose }) {
             placeholder="department"
             value={department || ""}
             onChange={handleInputFields}
+            />
+          <label htmlFor="email">Email</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="email"
+            value={email || ""}
+            onChange={handleInputFields}
           />
-          <label htmlFor="regId">Card ID</label>
+          <label htmlFor="regId">Member ID</label>
           <input
             type="reg"
             id="regId"
             name="regId"
             placeholder="card ID"
             value={regId || ""}
-            onChange={handleInputFields}
-          />
-          <label htmlFor="className">Class</label>
-          <input
-            type="className"
-            id="className"
-            name="className"
-            placeholder="Class name"
-            value={className || ""}
-            onChange={handleInputFields}
-          />
-          <label htmlFor="rollNo">University registration number</label>
-          <input
-            type="rollNo"
-            id="rollNo"
-            name="rollNo"
-            placeholder="PRN"
-            value={rollNo || ""}
             onChange={handleInputFields}
           />
           <input type="submit" value="UPDATE" />
@@ -176,7 +167,8 @@ function Updatestudent({ PopupClose }) {
         </form>
       </div>
     </div>
-  );
+    </div>
+  )
 }
 
-export default Updatestudent;
+export default UpdateTeacher
