@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams} from "react-router-dom";
 import fireDB from "../Database/Firebase";
 import Button from "@mui/material/Button";
 import { toast } from "react-toastify";
+import { ScaleLoader } from "react-spinners";
 import "../Compstyling/Books.css";
 
 const initalState = {
@@ -18,21 +19,13 @@ const initalState = {
 function UpdateStatus({ PopupClose }) {
   const [state, setState] = useState(initalState);
   const [data, setData] = useState({});
+  const [loading, setLoading] = useState(false);
   //   const [isPopupOpen, setIsPopupOpen] = useState(false);
   // const [flag, setFlag] = useState(false);
 
-  const {
-    name,
-    authorname,
-    bookid,
-    borrowerid,
-    dateOfissue,
-    dateOfreturn,
-    status,
-  } = state;
+  const {borrowerid,dateOfissue,dateOfreturn,status} = state;
 
   const { id } = useParams();
-  const navigate = useNavigate();
 
   useEffect(() => {
     fireDB.child("circulatedBooksDatabase").on("value", (snapshot) => {
@@ -63,29 +56,43 @@ function UpdateStatus({ PopupClose }) {
 
   const handleUpdatedStatus = (e) => {
     e.preventDefault();
-
+    setLoading(true);
     if (!id) {
       fireDB.child("circulatedBooksDatabase").push(state, (err) => {
         if (err) {
           toast.error("error");
+          setLoading(false)
         } else {
           toast.success("Already updated !");
+          setLoading(false)
         }
       });
     } else {
       fireDB.child(`circulatedBooksDatabase/${id}`).set(state, (err) => {
         if (err) {
           toast.error("Error");
+          setLoading(false)
         } else {
           toast.success("Status updated !");
+          setLoading(false)
         }
       });
     }
+
+    setTimeout(() => PopupClose(), 800);
   };
 
   return (
     <div>
-      <div>
+      <div>{
+        loading && (
+          <div className="backdrop">
+          <div className="preloader">
+            <ScaleLoader color="#fff" />
+            <p>Loading....</p>
+          </div>
+        </div>
+        )}
         <div className="book-issue-form">
           <form
             onSubmit={handleUpdatedStatus}

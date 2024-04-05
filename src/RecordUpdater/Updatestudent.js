@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams} from "react-router-dom";
 import { toast } from "react-toastify";
 import fireDB from "../Database/Firebase";
 // import Button from "@mui/material/Button";

@@ -16,16 +16,17 @@ import Support from "./DashMenu/Support";
 import Students from "./AllData/Students";
 import BooksData from "./AllData/BooksData";
 import AdminLogin from "./Admin/AdminLogin";
-import { toast } from "react-toastify";
-import { useEffect, useState } from "react";
-// import BookSearch from "./SearchComponant/BookSearch";
 import StudentSearch from "./SearchComponant/StudentSearch";
 import CreateAdmin from "./Admin/CreateAdmin";
-import UpdateStatus from "./DashMenu/UpdateStatus";
-import CirculatedBookData from "./AllData/CirculatedBookData";
+import { toast } from "react-toastify";
+import { useEffect, useState } from "react";
+import StatusControl from "./AllData/StatusControl";
+// import BookSearch from "./SearchComponant/BookSearch";
+// import UpdateStatus from "./RecordUpdater/UpdateStatus";
+// import CirculatedBookData from "./AllData/CirculatedBookData";
 
 
-
+// https://libson.netlify.app/
 
 
 function App() {
@@ -128,6 +129,14 @@ function App() {
                 ]}
               />
               <Route
+                path="/update-status"
+                element={[
+                  <Navbar onLogout={handleLoggout} />,
+                  <StatusControl/>,
+                  <DashboardMenu />,
+                ]}
+              />
+              <Route
                 path="/support"
                 element={[
                   <Navbar onLogout={handleLoggout} />,
@@ -147,7 +156,7 @@ function App() {
                 path="/status/:id"
                 element={[
                   <Navbar onLogout={handleLoggout} />,
-                  <BookCirculation/>,
+                  <StatusControl/>,
                   <DashboardMenu />,
                 ]}
               />

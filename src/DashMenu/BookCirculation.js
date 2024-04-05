@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import "../Compstyling/BookCirculation.css";
 import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
 import fireDB from "../Database/Firebase";
 import Button from "@mui/material/Button";
 import CirculatedBookData from "../AllData/CirculatedBookData";
 import BookFilters from "../filters/BookFilters";
-import { useParams, useNavigate } from "react-router-dom";
+import StatusControl from "../AllData/StatusControl";
+// import { useParams, useNavigate } from "react-router-dom";
 
 const books = {
   name: "",
@@ -69,7 +71,7 @@ function BookCirculation() {
  
   const Filtered = state.filter((item) => {
     const searchResults = item.borrowerid
-      .toLowerCase()
+      ?.toLowerCase()
       .includes(searchbook.toLowerCase());
     const status1 = statusFilter === "all" || item.status === statusFilter;
 
@@ -218,6 +220,7 @@ function BookCirculation() {
               style={{ borderRadius: "2px" }}
             ></input>
             <br />
+            <div style={{lineHeight:"8px"}}>
             <Button
               variant="contained"
               style={{ backgroundColor: "#00b38f", width: "100%",height: "30px"}}
@@ -225,7 +228,18 @@ function BookCirculation() {
             >
               Issue Book
             </Button>
-            &nbsp;&nbsp;
+              &nbsp;&nbsp;
+            <Link to="/update-status">
+              <Button color="secondary"
+               variant="contained" 
+               style={{ backgroundColor: "#ff0066", width: "100%", height: "30px" }}
+                  
+              >
+              Change status
+              </Button>
+            </Link>
+              
+            </div>
           </div>
           <div>
             <BookFilters

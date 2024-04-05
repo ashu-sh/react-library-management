@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import fireDB from "../Database/Firebase";
 import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
-import Updatebook from "./Updatebook";
+import Updatebook from "../RecordUpdater/Updatebook"
 import { ScaleLoader } from "react-spinners";
 
 

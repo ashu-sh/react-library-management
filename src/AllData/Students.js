@@ -3,7 +3,7 @@ import "../Compstyling/Students.css";
 import fireDB from "../Database/Firebase";
 import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
-import Updatestudent from "./Updatestudent";
+import Updatestudent from "../RecordUpdater/Updatestudent";
 import { toast } from "react-toastify";
 import { ScaleLoader } from "react-spinners";
 
