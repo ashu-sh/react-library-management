@@ -1,7 +1,14 @@
-import React from "react";
+import React, { useState,useEffect } from "react";
 import "../Compstyling/Searchbook.css";
 
+
+
+
+
+
 function BookSearch() {
+
+
   return (
     <div>
       <div className="book-search-form">
@@ -14,22 +21,6 @@ function BookSearch() {
             alignContent: "center",
           }}
         >
-          <label htmlFor="bookName">Book name</label>
-          <input
-            type="bookName"
-            id="bookName"
-            name="bookName"
-            placeholder="book name"
-            value=""
-          />
-          <label htmlFor="authorName">Author</label>
-          <input
-            type="authorName"
-            id="authorName"
-            name="authorName"
-            placeholder="author "
-            value=""
-          />
           <label htmlFor="bookId">Book ID</label>
           <input
             type="bookId"

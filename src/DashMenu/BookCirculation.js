@@ -6,7 +6,7 @@ import fireDB from "../Database/Firebase";
 import Button from "@mui/material/Button";
 import CirculatedBookData from "../AllData/CirculatedBookData";
 import BookFilters from "../filters/BookFilters";
-import StatusControl from "../AllData/StatusControl";
+// import StatusControl from "../AllData/StatusControl";
 // import { useParams, useNavigate } from "react-router-dom";
 
 const books = {
@@ -23,7 +23,6 @@ function BookCirculation() {
   // const [flag, setFlag] = useState(false);
   const [formData, setFormData] = useState(books);
   const [state, setState] = useState([]);
-  const [editingId, setEditingId] = useState(null);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [searchbook, setSearchbook] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
@@ -70,9 +69,8 @@ function BookCirculation() {
 
  
   const Filtered = state.filter((item) => {
-    const searchResults = item.borrowerid
-      ?.toLowerCase()
-      .includes(searchbook.toLowerCase());
+    const searchResults = item.borrowerid?.toLowerCase().includes(searchbook.toLowerCase());
+
     const status1 = statusFilter === "all" || item.status === statusFilter;
 
     return searchResults && status1;
