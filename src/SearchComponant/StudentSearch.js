@@ -4,25 +4,30 @@ import "../Compstyling/Searchbook.css";
 import fireDB from "../Database/Firebase";
 import SearchResults from "./SearchResults";
 import { ScaleLoader } from "react-spinners";
+import SearchedStudentData from "./SearchedStudentData";
 
 
 function StudentSearch() {
 
   const [state, setState] = useState([]);
   const [searchBook, setSearchbook] = useState([]);
-  const [searchInput,setSearchInput] = useState('')
+  const [searchStudent, setSearchStudent] = useState([]);
+  const [Query_1, setQuery_1] = useState('');
+  const [Query_2, setQuery_2] = useState('');
   const [loading, setLoading] = useState(false);
 
 
-  const SearchTrigger = async (e) => {
+
+  const SearchBookTrigger = async (e) => {
 
     e.preventDefault();
     setLoading(true);
     try {
-      const BookData = await fireDB.child("circulatedBooksDatabase").orderByChild('bookid').equalTo(searchInput).once('value');
+      const BookData = await fireDB.child("circulatedBooksDatabase").orderByChild('bookid').equalTo(Query_1).once('value');
 
       const fetchedData = BookData.val();
       const BookdataArray = Object.values(fetchedData);
+
       setSearchbook(BookdataArray);
       setState(BookdataArray);
       setLoading(false);
@@ -33,8 +38,34 @@ function StudentSearch() {
     } 
   }
 
+  const SearchStudentTrigger = async (e) => {
+    
+    e.preventDefault();
+
+    setLoading(true);
+
+    try {
+      const studentData = await fireDB.child('studentMemberShipData').orderByChild('regId').equalTo(Query_2).once('value');
+
+      const fetchedData = studentData.val();
+      const StudentArray = Object.values(fetchedData);
+
+      setSearchStudent(StudentArray);
+      setState(StudentArray);
+      setLoading(false);
+
+    } catch (error){
+      console.log('error', error);
+      setLoading(false);
+    }
+  }
+
   const handleSearchBook = (e) => {
-    setSearchInput(e.target.value);
+    setQuery_1(e.target.value);
+  }
+
+  const handleSearchStudent = (e) => {
+    setQuery_2(e.target.value);
   }
 
 
@@ -67,9 +98,10 @@ function StudentSearch() {
             id="regId"
             name="regId"
             placeholder="member ID"
-            value=""
+            value={Query_2}
+            onChange={handleSearchStudent}
           />
-          <button className="submit-search" type="submit">
+          <button className="submit-search" type="submit"onClick={SearchStudentTrigger}>
             Search Student
           </button>
         </form>
@@ -90,17 +122,21 @@ function StudentSearch() {
             id="bookId"
             name="bookId"
             placeholder="book ID"
-            value={searchInput}
+            value={Query_1}
             onChange={handleSearchBook}
           />
-          <button className="submit-search" type="submit" onClick={SearchTrigger}>
+          <button className="submit-search" type="submit" onClick={SearchBookTrigger}>
             Search Book
           </button>
         </form>     
         </div>
       </div>
       <div style={{ textAlign: "center", margin: "40px" }}>{
-        searchBook.length === 0 ? "" : <SearchResults searchBook={searchBook} state={state}/>
+        searchBook.length === 0 ? "" : <SearchResults searchBook={searchBook} state={state}/> 
+      }
+      </div>
+      <div style={{ textAlign: "center", margin: "20px" }}>{
+        searchStudent.length === 0 ? "" : <SearchedStudentData searchStudent={searchStudent} state={state} />
       }
       </div>
     </div>
